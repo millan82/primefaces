@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>PrimeFaces Hello World Example</title>
+</h:head>
+
+<h:body>
+	<h:form id="helloworld-form">
+
+		<p:panel header="PrimeFaces Hello World Example">
+			<h:panelGrid columns="2" cellpadding="4" id="newPerson">
+				<h:outputText value="First Name: " />
+				<p:inputText id="name" value="#{people.person.name}" />
+
+				<h:outputText value="Age: " />
+				<p:inputText id="age" value="#{people.person.age}" />
+
+				<p:commandButton value="submit"
+					actionListener="#{people.savePerson}"
+					update="tablaProveedores newPerson" />
+
+			</h:panelGrid>
+		</p:panel>
+		<!-- Panel principal de la pagina -->  
+                <p:focus context="panelPrincipal"/>                  
+                <p:panel id="panelPrincipal">  
+                     <!-- Lista de proveedores disponibles -->  
+                     <p:dataTable id="tablaProveedores" value="#{people.persons}" var="person" rowKey="#{person.id}"  lazy="true"
+                          paginator="true" rows="10"  rowsPerPageTemplate="5,10,15" 
+                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"                            
+                          filterEvent="enter" selection="#{people.personList}" sortBy="#{person.id}" sortOrder="ascending">  
+
+                          <p:column selectionMode="multiple" />  
+                          <p:column headerText="Id">  
+                               <h:outputText value="#{person.id}" />  
+                          </p:column>  
+                          <p:column headerText="Nombre" sortBy="#{person.name}" filterBy="#{person.name}" filterMaxLength="20">  
+                               <h:outputText value="#{person.name}" />  
+                          </p:column>  
+                          <p:column headerText="Edad" sortBy="#{person.age}" filterBy="#{person.age}" >  
+                               <h:outputText value="#{person.age}" />  
+                          </p:column>  
+                     </p:dataTable>   
+                     <p:commandButton value="delete" actionListener="#{people.delete}" update="tablaProveedores"/>
+                </p:panel>  
+	</h:form>
+</h:body>
+</html>
