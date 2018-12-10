@@ -9,22 +9,23 @@
 </h:head>
 
 <h:body>
-	<h:form id="helloworld-form">
+	<h:form id="form">
 
-		<p:panel header="PrimeFaces Hello World Example">
-			<h:panelGrid columns="2" cellpadding="4" id="newPerson">
+		<p:panel id="panelPerson" header="PrimeFaces Hello World Example">
+			<h:panelGrid columns="2" cellpadding="4">
 				<h:outputText value="First Name: " />
 				<p:inputText id="name" value="#{people.person.name}" />
 
 				<h:outputText value="Age: " />
 				<p:inputText id="age" value="#{people.person.age}" />
-
-				<p:commandButton value="submit"
-					actionListener="#{people.savePerson}"
-					update="tablaProveedores newPerson" />
-
 			</h:panelGrid>
 		</p:panel>
+		<p:commandButton id="guardar" value="submit"
+					actionListener="#{people.savePerson}"
+					update="tablaProveedores name age" />
+		<p:blockUI block="panelPerson" trigger="guardar"/>	
+		
+		<p:growl id="message" for="message" showDetail="true" severity="info" life="1000" autoUpdate="true"/>
 		<!-- Panel principal de la pagina -->  
                 <p:focus context="panelPrincipal"/>                  
                 <p:panel id="panelPrincipal">  
@@ -45,8 +46,9 @@
                                <h:outputText value="#{person.age}" />  
                           </p:column>  
                      </p:dataTable>   
-                     <p:commandButton value="delete" actionListener="#{people.delete}" update="tablaProveedores"/>
+                     <p:commandButton id="delete" value="delete" actionListener="#{people.delete}" update="tablaProveedores"/>
                 </p:panel>  
+                <p:blockUI block="panelPrincipal" trigger="delete"/>	
 	</h:form>
 </h:body>
 </html>

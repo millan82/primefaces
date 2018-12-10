@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import org.springframework.beans.factory.annotation.Autowired;
 import es.jsfprime.primefaces.model.Person;
@@ -57,8 +59,12 @@ public class PersonController {
   }
 
   public void savePerson() {
-    service.savePerson(person);
-    person = new Person();
+    if (!person.getName().isEmpty()) {
+      service.savePerson(person);
+      FacesContext.getCurrentInstance().addMessage("message",
+          new FacesMessage("Info", "la persona " + person.getName() + " ha sido creada"));
+      person = new Person();
+    }
   }
 
 

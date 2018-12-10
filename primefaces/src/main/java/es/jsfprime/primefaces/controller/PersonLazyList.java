@@ -32,12 +32,10 @@ public class PersonLazyList extends LazyDataModel<Person> {
   @Override
   public List<Person> load(int first, int pageSize, String sortField, SortOrder sortOrder,
       Map<String, Object> filters) {
-    Sort sort = null;
-    if (sortOrder != null) {
-      sort = Sort.by(Order.asc(sortField));
-      if (SortOrder.DESCENDING.equals(sortOrder)) {
-        sort = Sort.by(Order.desc(sortField));
-      }
+
+    Sort sort = Sort.by(Order.asc(sortField));
+    if (SortOrder.DESCENDING.equals(sortOrder)) {
+      sort = Sort.by(Order.desc(sortField));
     }
     Page<Person> resultadoPaginado =
         service.getAllPerson(PageRequest.of(first / pageSize, pageSize, sort));
